@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ```bash
 uvicorn app.main:app --reload --port %PORT%
 ```
-If `%PORT%` is unset, defaults to 8000.
+If `%PORT%` is unset, defaults to 8001.
 
 ## API
 - `POST /auth/login` body `{ "username": "alice" }` → `{ user_id }`
