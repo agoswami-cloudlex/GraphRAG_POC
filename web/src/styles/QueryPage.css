@@ -1,0 +1,45 @@
+/* Styles for QueryPage */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f7f7fa;
+}
+.header-bar {
+  padding: 1em;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.chat-bubble {
+  max-width: 60%;
+  border-radius: 16px;
+  padding: 1em;
+  box-shadow: 0 2px 8px #0001;
+  font-size: 1.05em;
+  word-break: break-word;
+}
+.user-bubble {
+  background: #e0e7ff;
+}
+.bot-bubble {
+  background: #fff;
+}
+.input-bar {
+  padding: 1em;
+  background: #fff;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}

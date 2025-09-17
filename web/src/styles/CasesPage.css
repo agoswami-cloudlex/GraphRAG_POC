@@ -1,0 +1,12 @@
+/* Styles for CasesPage */
+.page-container {
+  padding: 2em;
+  background: #f7f7fa;
+}
+.case-list {
+  margin-top: 1em;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 1em;
+}

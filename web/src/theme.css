@@ -1,0 +1,45 @@
+
+:root {
+	--bg: oklch(95% 0.08 277.023);
+	--surface: oklch(92% 0.12 277.023);
+	--primary: oklch(60% 0.24 277.023);
+	--accent: oklch(45.7% 0.24 277.023);
+	--text: oklch(25% 0.08 277.023);
+	--muted: oklch(60% 0.12 277.023);
+	--success: oklch(70% 0.18 150);
+	--error: oklch(70% 0.18 30);
+}
+
+body.dark {
+	--bg: oklch(20% 0.08 277.023);
+	--surface: oklch(28% 0.12 277.023);
+	--primary: oklch(70% 0.24 277.023);
+	--accent: oklch(80% 0.24 277.023);
+	--text: oklch(95% 0.08 277.023);
+	--muted: oklch(70% 0.12 277.023);
+	--success: oklch(70% 0.18 150);
+	--error: oklch(70% 0.18 30);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--text); background: var(--bg); }
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--surface); border-bottom: 1px solid rgba(0,0,0,0.06); }
+.header .brand a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.header nav { display: flex; gap: 16px; }
+.header nav a { color: var(--text); text-decoration: none; padding: 6px 8px; border-radius: 8px; }
+.header nav a:hover { background: rgba(0,0,0,0.04); }
+.header .user { display: flex; align-items: center; gap: 10px; }
+.header .user button { background: var(--primary); color: white; border: 0; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+
+.main { width: 100%; max-width: 1024px; margin: 20px auto; padding: 0 16px; }
+.card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); padding: 16px; margin-bottom: 16px; }
+.input, .select, .textarea { width: 100%; padding: 10px 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; background: #fff; }
+.button { background: var(--accent); color: #fff; border: 0; padding: 10px 14px; border-radius: 10px; cursor: pointer; }
+.button.secondary { background: var(--primary); }
+.muted { color: var(--muted); }
+.flex { display: flex; gap: 10px; }
+.grid { display: grid; gap: 12px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
