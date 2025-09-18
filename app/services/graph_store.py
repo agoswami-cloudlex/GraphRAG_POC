@@ -1,9 +1,8 @@
-
+import os
 import yaml
+from dotenv import load_dotenv
 from graphrag.api.index import build_index
 from graphrag.config.create_graphrag_config import create_graphrag_config
-import os
-from dotenv import load_dotenv
 load_dotenv()
 class GraphStore:
 	async def query(

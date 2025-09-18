@@ -7,8 +7,11 @@ chromadb
 neo4j
 py2neo
 langchain-text-splitters
+tqdm
 PyPDF2
+pdfplumber
 python-docx
+python-pptx
 tqdm
 networkx
 openai
