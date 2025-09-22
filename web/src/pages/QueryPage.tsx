@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { api } from '@/api/client'
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { api } from '@/api/client';
 
 interface Case { id: string; name: string }
 interface RetrievedChunk { text: string; score: number; metadata: Record<string, any> }
@@ -18,6 +19,7 @@ export default function QueryPage() {
 	const [paths, setPaths] = useState<GraphPath[]>([])
 	const [refs, setRefs] = useState<string[]>([])
 	const [error, setError] = useState<string | null>(null)
+	const [deleteStatus, setDeleteStatus] = useState<string | null>(null)
 
 	useEffect(() => {
 		(async () => {
@@ -57,8 +59,19 @@ export default function QueryPage() {
 			setChunks(data.chunks || [])
 			setPaths(data.graph_paths || [])
 			setRefs(data.references || [])
+		} catch (e) {
+			setError('Failed to get answer.')
+		}
+	}
+
+	async function deleteHistory() {
+		if (!window.confirm('Are you sure you want to delete ALL history (input and output folders)? This cannot be undone.')) return;
+		setDeleteStatus(null);
+		try {
+			await api.delete('/documents/delete_history');
+			setDeleteStatus('History deleted successfully.');
 		} catch (e: any) {
-			setError(e?.response?.data?.detail || 'Failed')
+			setDeleteStatus('Failed to delete history.');
 		}
 	}
 
@@ -134,11 +147,50 @@ export default function QueryPage() {
 						</div>
 					</div>
 					{error && <div className="muted">{error}</div>}
+					<button className="button" style={{marginTop: '1em', background: '#e74c3c', color: '#fff'}} onClick={deleteHistory}>
+						Delete All History
+					</button>
+					{deleteStatus && <div className="muted">{deleteStatus}</div>}
 				</div>
 			</div>
 			<div className="card">
 				<h3>Answer</h3>
-				<pre className="textarea" style={{ whiteSpace: 'pre-wrap' }}>{answer || '—'}</pre>
+				<div className="textarea" style={{ 
+					whiteSpace: 'normal', 
+					padding: '1rem', 
+					border: '1px solid #ddd', 
+					borderRadius: '4px', 
+					backgroundColor: '#f9f9f9',
+					lineHeight: '1.6'
+				}}>
+					{answer ? (
+						<ReactMarkdown
+							components={{
+								// Custom styling for markdown elements
+								h1: ({node, ...props}) => <h1 style={{fontSize: '1.5em', marginBottom: '0.5em', borderBottom: '2px solid #eee', paddingBottom: '0.3em'}} {...props} />,
+								h2: ({node, ...props}) => <h2 style={{fontSize: '1.3em', marginBottom: '0.5em', marginTop: '1em'}} {...props} />,
+								h3: ({node, ...props}) => <h3 style={{fontSize: '1.1em', marginBottom: '0.5em', marginTop: '0.8em'}} {...props} />,
+								p: ({node, ...props}) => <p style={{marginBottom: '0.8em'}} {...props} />,
+								ul: ({node, ...props}) => <ul style={{marginBottom: '0.8em', paddingLeft: '1.5em'}} {...props} />,
+								ol: ({node, ...props}) => <ol style={{marginBottom: '0.8em', paddingLeft: '1.5em'}} {...props} />,
+								li: ({node, ...props}) => <li style={{marginBottom: '0.3em'}} {...props} />,
+								code: ({node, ...props}: any) => {
+									const inline = props.inline;
+									return inline ? 
+										<code style={{backgroundColor: '#f1f1f1', padding: '0.2em 0.4em', borderRadius: '3px', fontSize: '0.9em'}} {...props} /> :
+										<code style={{display: 'block', backgroundColor: '#f8f8f8', padding: '1em', borderRadius: '4px', border: '1px solid #e1e1e1', fontSize: '0.9em', overflow: 'auto'}} {...props} />
+								},
+								blockquote: ({node, ...props}) => <blockquote style={{borderLeft: '4px solid #ddd', paddingLeft: '1em', margin: '1em 0', fontStyle: 'italic', color: '#666'}} {...props} />,
+								strong: ({node, ...props}) => <strong style={{fontWeight: 'bold'}} {...props} />,
+								em: ({node, ...props}) => <em style={{fontStyle: 'italic'}} {...props} />
+							}}
+						>
+							{answer}
+						</ReactMarkdown>
+					) : (
+						<span style={{ color: '#999' }}>—</span>
+					)}
+				</div>
 			</div>
 			<div className="card">
 				<h3>Sources</h3>
